@@ -5,9 +5,13 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.ZeroPosition;
+
+import frc.robot.commands.LowPosition;
+import frc.robot.commands.MidPosition;
+import frc.robot.commands.ArmSafteyPosition;
+import frc.robot.commands.HighPosition;
 import frc.robot.commands.ManualElevatorDrive;
-import frc.robot.commands.Test;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,17 +24,16 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotContainer {
   ElevatorSubsystem elevSub; 
   XboxController joystick = new XboxController(OperatorConstants.JOYSTICK);
-  double lowEnc = 0;    // TEST
-  double midEnc = 40; // TEST
-  double highEnc = 80;  // TEST
-  ElevatorCommand lowCmd = new ElevatorCommand(elevSub, lowEnc);
-  ElevatorCommand highCmd = new ElevatorCommand(elevSub, highEnc);
-  ElevatorCommand midCmd = new ElevatorCommand(elevSub, midEnc);
+  ZeroPosition zeroCmd = new ZeroPosition(elevSub);
+  ArmSafteyPosition armSafeCmd = new ArmSafteyPosition(elevSub);
+  LowPosition lowCmd = new LowPosition(elevSub);
+  MidPosition midCmd = new MidPosition(elevSub);
+  HighPosition highCmd = new HighPosition(elevSub);
   ManualElevatorDrive manualUp = new ManualElevatorDrive(elevSub, 0.2);
   ManualElevatorDrive manualDown = new ManualElevatorDrive(elevSub, -0.2);
   
   public RobotContainer() {
-    elevSub.setDefaultCommand(new Test(elevSub,() ->  joystick.getLeftY()));
+   
 
     configureBindings();
   }

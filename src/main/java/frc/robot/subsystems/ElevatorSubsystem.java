@@ -23,7 +23,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   DigitalInput topLim;
   DigitalInput bottomLim;
   PIDController pid = new PIDController(0.1, 0, 0);
-  double setpoint = enc.getPosition();
+  double setpoint = 0;
   double lastError = 0;
   double manualSpeed = 0;
 
@@ -32,6 +32,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     bottomLim = new DigitalInput(OperatorConstants.BOTTOM_LIMIT_SWITCH);
     elevator = new CANSparkMax(OperatorConstants.ELEVATOR_ID, MotorType.kBrushless);
     enc = elevator.getEncoder();
+    setpoint = enc.getPosition();
+    pid.setTolerance(1);
+  }
+
+  public boolean isAtSetpoint(){
+    return pid.atSetpoint();
   }
 
   public void setManualSpeed(double inputSpeed){
@@ -103,8 +109,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     if(calcSpeed > 1){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
       calcSpeed = 1;
     }
-    else if(calcSpeed < -0.2){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
-      calcSpeed = -0.2;
+    else if(calcSpeed < -0.8){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
+      calcSpeed = -0.8;
     }
     elevator.set(calcSpeed);
     
@@ -114,5 +120,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.getBoolean("Top switch pressed" , topPressed()); 
     SmartDashboard.getBoolean("Bottom switch pressed", bottomPressed());
     SmartDashboard.getNumber("encoder counts", encoderValue);
+    SmartDashboard.putNumber("Setpoint", setpoint);
   }
 }

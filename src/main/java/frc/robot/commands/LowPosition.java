@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
-import edu.wpi.first.math.controller.PIDController;
 
 public class LowPosition extends CommandBase {
   ElevatorSubsystem elevSub;

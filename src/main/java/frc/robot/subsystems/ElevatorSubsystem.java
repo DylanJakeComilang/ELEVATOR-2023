@@ -33,7 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevator = new CANSparkMax(OperatorConstants.ELEVATOR_ID, MotorType.kBrushless);
     enc = elevator.getEncoder();
     setpoint = enc.getPosition();
-    elevator.setIdleMode(IdleMode.kCoast);
+    elevator.setIdleMode(IdleMode.kBrake);
     pid.setTolerance(1);
   }
 
@@ -52,7 +52,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void init(){ 
-    elevator.setIdleMode(IdleMode.kCoast);
+    elevator.setIdleMode(IdleMode.kBrake);
   }
 
   public boolean topPressed(){

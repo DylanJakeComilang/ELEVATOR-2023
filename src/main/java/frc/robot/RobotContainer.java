@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class RobotContainer {
-  ElevatorSubsystem elevSub; 
+  ElevatorSubsystem elevSub = new ElevatorSubsystem(); 
   XboxController joystick = new XboxController(OperatorConstants.JOYSTICK);
   ZeroPosition zeroCmd = new ZeroPosition(elevSub);
   ArmSafteyPosition armSafeCmd = new ArmSafteyPosition(elevSub);
@@ -40,9 +40,9 @@ public class RobotContainer {
 
   
   private void configureBindings() {
-    new JoystickButton(joystick, 2).onTrue(highCmd);
-    new JoystickButton(joystick, 1).onTrue(midCmd);
-    new JoystickButton(joystick, 0).onTrue(lowCmd);
+    new JoystickButton(joystick, 3).onTrue(highCmd);
+    new JoystickButton(joystick, 2).onTrue(midCmd);
+    new JoystickButton(joystick, 1).onTrue(lowCmd);
 
     new JoystickButton(joystick, 5).whileTrue(manualUp);
     new JoystickButton(joystick, 6).whileTrue(manualDown);

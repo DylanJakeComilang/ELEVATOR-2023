@@ -33,11 +33,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevator = new CANSparkMax(OperatorConstants.ELEVATOR_ID, MotorType.kBrushless);
     enc = elevator.getEncoder();
     setpoint = enc.getPosition();
+    elevator.setIdleMode(IdleMode.kCoast);
     pid.setTolerance(1);
   }
 
   public boolean isAtSetpoint(){
-    return pid.atSetpoint();
+    double error = setpoint - enc.getPosition();
+    //SmartDashboard.putNumber("Error", error);
+    return Math.abs(error) < 2;
   }
 
   public void setManualSpeed(double inputSpeed){
@@ -49,7 +52,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void init(){ 
-    elevator.setIdleMode(IdleMode.kBrake);
+    elevator.setIdleMode(IdleMode.kCoast);
   }
 
   public boolean topPressed(){
@@ -96,30 +99,37 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     
     //
-    if(topPressed() && calcSpeed > 0){ // BUT IF THE TOP SWITCH IS PRESSED, IT RESETS ENCODER AND CHANGES SET POINT TO 0
+    //SmartDashboard.putNumber("calcSpeed precheck", calcSpeed);
+    if(topPressed() && calcSpeed > 0.0){ // BUT IF THE TOP SWITCH IS PRESSED, IT RESETS ENCODER AND CHANGES SET POINT TO 0
+      //SmartDashboard.putBoolean("UpperLimit", true);
       calcSpeed = 0;
       //setpoint = enc.getPosition();
     }
-    else if(bottomPressed() && calcSpeed < 0){ // -9 < - low position
+    else if(bottomPressed() && calcSpeed < 0.0){ // -9 < - low position
+      //SmartDashboard.putBoolean("BottomLimit", true);
       calcSpeed = 0;
       //setpoint = enc.getPosition();
     }
+    /*else{
+      SmartDashboard.putBoolean("UpperLimit", false);
+      SmartDashboard.putBoolean("BottomLimit",false);
+    }*/
     //
     
-    if(calcSpeed > 1){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
-      calcSpeed = 1;
+    if(calcSpeed > 0.5){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
+      calcSpeed = 0.5;
     }
-    else if(calcSpeed < -0.8){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
-      calcSpeed = -0.8;
+    else if(calcSpeed < -0.3){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
+      calcSpeed = -0.3;
     }
     elevator.set(calcSpeed);
     
     
 
-    SmartDashboard.getNumber(" PID Speed", calcSpeed);
-    SmartDashboard.getBoolean("Top switch pressed" , topPressed()); 
-    SmartDashboard.getBoolean("Bottom switch pressed", bottomPressed());
-    SmartDashboard.getNumber("encoder counts", encoderValue);
-    SmartDashboard.putNumber("Setpoint", setpoint);
+   // SmartDashboard.putNumber(" PID Speed", calcSpeed);
+   // SmartDashboard.putBoolean("Top switch pressed" , topPressed()); 
+   // SmartDashboard.putBoolean("Bottom switch pressed", bottomPressed());
+   // SmartDashboard.putNumber("encoder counts", encoderValue);
+   // SmartDashboard.putNumber("Setpoint", setpoint);
   }
 }

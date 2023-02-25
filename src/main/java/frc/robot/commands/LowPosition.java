@@ -29,11 +29,6 @@ public class LowPosition extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if(elevSub.isAtSetpoint()){ // if setpoint is within tolerance return true
-      return true;
-    }
-    else{ // else if not within tolerance return false
-      return false;
-    }
-  }
+  return elevSub.isAtSetpoint() || elevSub.bottomPressed();
+}
 }

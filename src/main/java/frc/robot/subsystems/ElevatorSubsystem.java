@@ -116,11 +116,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     }*/
     //
     
-    if(calcSpeed > 0.5){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
-      calcSpeed = 0.5;
+    if(calcSpeed > 0.8){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
+      calcSpeed = 0.8;
     }
-    else if(calcSpeed < -0.3){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
-      calcSpeed = -0.3;
+    else if(calcSpeed < -0.4){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
+      calcSpeed = -0.4;
     }
     elevator.set(calcSpeed);
     

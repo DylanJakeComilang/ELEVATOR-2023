@@ -24,11 +24,11 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotContainer {
   ElevatorSubsystem elevSub = new ElevatorSubsystem(); 
   XboxController joystick = new XboxController(OperatorConstants.JOYSTICK);
-  ZeroPosition zeroCmd = new ZeroPosition(elevSub);
   ArmSafteyPosition armSafeCmd = new ArmSafteyPosition(elevSub);
   LowPosition lowCmd = new LowPosition(elevSub);
   MidPosition midCmd = new MidPosition(elevSub);
   HighPosition highCmd = new HighPosition(elevSub);
+  ZeroPosition zeroCmd = new ZeroPosition(elevSub);
   ManualElevatorDrive manualUp = new ManualElevatorDrive(elevSub, 0.2);
   ManualElevatorDrive manualDown = new ManualElevatorDrive(elevSub, -0.2);
   
@@ -40,6 +40,7 @@ public class RobotContainer {
 
   
   private void configureBindings() {
+    new JoystickButton(joystick, 4).onTrue(zeroCmd);
     new JoystickButton(joystick, 3).onTrue(highCmd);
     new JoystickButton(joystick, 2).onTrue(midCmd);
     new JoystickButton(joystick, 1).onTrue(lowCmd);

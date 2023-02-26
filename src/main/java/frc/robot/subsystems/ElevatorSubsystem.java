@@ -116,20 +116,20 @@ public class ElevatorSubsystem extends SubsystemBase {
     }*/
     //
     
-    if(calcSpeed > 0.8){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
-      calcSpeed = 0.8;
+    if(calcSpeed > 0.9){ // IF SPEED CALCULATED IS GREATER THAN 1, SETS MAX SPEED TO 1
+      calcSpeed = 0.9;
     }
-    else if(calcSpeed < -0.4){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
-      calcSpeed = -0.4;
+    else if(calcSpeed < -0.6){ // IF SPEED CALCULATED IS LESS THAN -1, SETS MAX SPEED TO -1
+      calcSpeed = -0.6;
     }
     elevator.set(calcSpeed);
     
     
 
-   // SmartDashboard.putNumber(" PID Speed", calcSpeed);
-   // SmartDashboard.putBoolean("Top switch pressed" , topPressed()); 
-   // SmartDashboard.putBoolean("Bottom switch pressed", bottomPressed());
-   // SmartDashboard.putNumber("encoder counts", encoderValue);
-   // SmartDashboard.putNumber("Setpoint", setpoint);
+    SmartDashboard.putNumber(" PID Speed", calcSpeed);
+    SmartDashboard.putBoolean("Top switch pressed" , topPressed()); 
+    SmartDashboard.putBoolean("Bottom switch pressed", bottomPressed());
+    SmartDashboard.putNumber("encoder counts", encoderValue);
+    SmartDashboard.putNumber("Setpoint", setpoint);
   }
 }
